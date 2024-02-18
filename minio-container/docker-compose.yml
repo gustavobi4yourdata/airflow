@@ -1,0 +1,26 @@
+version: '3,7'
+
+services:
+    minio:
+        hostname: minio
+        image: minio/minio:latest
+        container_name: minio
+        ports:
+            - '9001:9001'
+            - '9000:9000'
+        volumes:
+            - ./volumes/minio/data:/data
+        environment:
+            MINIO_ACCESS_KEY: admin
+            MINIO_SECRET_KEY: admin123
+        command: server /data --console-address ":9001"
+        networks:
+            - minio_network
+
+networks:
+    minio_network:
+        driver: bridge
+                    
+volumes:
+    minio_data:
+        driver: local 
